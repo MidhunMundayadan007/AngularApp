@@ -15,6 +15,7 @@ import { ModalTriggerDirective } from './common/modal-trigger.directive';
 import { SimpleModelComponent } from './common/modelDialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './common/token.interceptor';
+import { AuthGuardService } from './common/AuthGuardService';
 let toastr: Toastr = window['toastr'];
 let jQuery = window['$'];
 
@@ -46,7 +47,9 @@ let jQuery = window['$'];
     {provide: JQ_TOKEN, useValue: jQuery},
     training.TrainingRouteActivator,
     training.TrainingListResolver,
-    { provide: 'canDeactivateCreateTraining',   useValue: checkDirtyState, }, AuthService,
+    AuthGuardService,
+    { provide: 'canDeactivateCreateTraining',   useValue: checkDirtyState, },
+    AuthService,
     { provide: HTTP_INTERCEPTORS,  useClass: TokenInterceptor,  multi: true },
     { provide: HTTP_INTERCEPTORS,  useClass: JwtInterceptor,  multi: true }],
     bootstrap: [TrainingAppComponent]
