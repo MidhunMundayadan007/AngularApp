@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  color: whitesmoke;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.navbar-default .navbar-collapse, .navbar-default {
+  background-color: #020513;
+  color: rgb(104, 20, 20);
+}
+
+.well{
+  background-color: #020513;
+  color: whitesmoke;
+}
+.hoverwell:hover {
+  background-color: #485563;
+  cursor: pointer;
+}
+
+.container {
+  padding-top: 10px;
+  background-color: #485563;
+}
+
+.pointable {
+  cursor: pointer;
+}
+
+button {
+  color: #555;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.toast-success {
+  background-color: #51a351;
+}
+.toast-error {
+  background-color: #bd362f;
+}
+.toast-info {
+  background-color: #2f96b4;
+}
+.toast-warning {
+  background-color: #f89406;
+}

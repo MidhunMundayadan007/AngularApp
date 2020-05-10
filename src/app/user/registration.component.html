@@ -1,0 +1,32 @@
+<h1>Sign Up</h1>
+<hr>
+<div class="col-md-4">
+  <form  autocomplete="false" #registrationForm="ngForm"  (ngSubmit)="registerUser(registrationForm.value)" autocomplete="off">
+    <div class="form-group" >
+      <label for="userName">User Name:</label>
+      <em *ngIf="registrationForm.controls?.username?.invalid &&
+      (registrationForm.controls?.username?.touched|| mouseoverLogin)">Required</em>
+      <input  (ngModel)="username"  id="username" name="username"type="text"
+       class="form-control" placeholder="User Name..." required autocomplete="off"/>
+    </div>
+    <div class="form-group" >
+      <label for="email">Email:</label>
+      <em *ngIf="registrationForm.controls?.email?.invalid &&
+      (registrationForm.controls?.email?.touched|| mouseoverLogin)">Required</em>
+      <input  (ngModel)="email"  id="email" name="email"type="text"
+       class="form-control" placeholder="Email Id..." required autocomplete="off"/>
+    </div>
+    <div class="form-group" >
+      <label for="password">Password:</label>
+      <em *ngIf="registrationForm.controls?.password?.invalid
+      &&  (registrationForm.controls?.password?.touched|| mouseoverLogin)">Required</em>
+      <input (ngModel)="password" id="password" type="password" name="password"
+       class="form-control" placeholder="Password..." required autocomplete="off"/>
+    </div>
+    <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false">
+      <button type="submit" [disabled]="registrationForm.invalid" class="btn btn-primary">Sign Up</button>
+      &nbsp;
+    </span>
+    <button type="button" (click)="login(registrationForm.value)"  class="btn btn-default">Sign In</button>
+  </form>
+</div>

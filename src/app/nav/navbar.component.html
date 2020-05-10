@@ -1,0 +1,62 @@
+<div class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" >Learning</a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav"  *ngIf="auth.isAuthenticated()">
+        <li>
+          <a [routerLink]="['/training']" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active"  >All Courses</a>
+        </li>
+        <li><a [routerLink]="['/training/new']" routerLinkActive="active">Create Course</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+            Courses
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li >
+              <a href="">Angular</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="navbar-header navbar-right">
+        <ul class="nav navbar-nav">
+          <li>
+            <a [routerLink]="['user/login']" *ngIf="!auth.isAuthenticated()"  routerLinkActive="active" >Login</a>
+
+            <a [routerLink]="['user/profile']" *ngIf="auth.isAuthenticated()"  routerLinkActive="active" >
+              Welcome&nbsp;{{auth.currentUser.username}}</a>
+          </li>
+          <li>
+            <a [routerLink]="['user/register']" *ngIf="!auth.isAuthenticated()"  routerLinkActive="active" >Register</a>
+          </li>
+          <li>
+            <a [routerLink]="['user/login']" *ngIf="auth.isAuthenticated()" (click)="auth.logOut()" routerLinkActive="active" >
+              Logout</a>
+          </li>
+        </ul>
+      </div>
+      <form id="searchForm" (ngSubmit)="searchCourse(searchTerm)"  class="navbar-form navbar-right"  >
+        <div class="form-group">
+          <input type="text" [(ngModel)]="searchTerm"
+          name="searchTerm" class="form-control" placeholder="Search Courses" >
+        </div>
+        <span>&nbsp;</span>
+        <button class="btn btn-default" modal-trigger>
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<simple-modal title="Matching Courses">
+  <div class="list-group">
+    <a class="list-group-item" *ngFor="let course of foundCourses"  [routerLink]="['/trainings',course.id]">
+      {{course.Topic}}
+    </a>
+  </div>
+</simple-modal>
+

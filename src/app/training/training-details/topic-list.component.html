@@ -1,0 +1,13 @@
+<div class="row" *ngFor="let topic of visibilTopics">
+  <div class="col-md-10">
+    <collapsible-well>
+      <div well-title>
+      {{topic.Topic}}<i *ngIf="topic?.NumberOfVotes > 1" class="glyphicon glyphicon-heart" style=color:red; ></i>
+      </div>
+      <div well-body>
+        <span>Level: {{topic.level}}</span>
+        <p>{{topic.Description}}</p>
+      </div>
+    </collapsible-well>
+  </div>
+</div>
