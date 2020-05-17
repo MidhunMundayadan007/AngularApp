@@ -3,4 +3,5 @@ export interface IUser {
   lastName: string;
   passwrod: string;
   token: string;
+  refreshToken: string;
 }

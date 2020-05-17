@@ -2,6 +2,7 @@
 <hr>
 <div class="col-md-6">
   <form #newTrainingForm="ngForm" (ngSubmit)="saveTraining(newTrainingForm.value)" autocomplete="off" novalidate>
+
     <div class="form-group" [ngClass]="{'error': newTrainingForm.controls.name?.invalid && newTrainingForm.controls.name?.touched}">
       <label for="eventName">Training Name:</label>
       <em *ngIf="newTrainingForm.controls.CourseName?.invalid && (newTrainingForm.controls.CourseName?.touched)">Required</em>

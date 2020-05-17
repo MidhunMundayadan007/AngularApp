@@ -2,12 +2,13 @@ import * as training from './training/index';
 import { Routes, RouterModule } from '@angular/router';
 import { Error404Component } from './error/404.component';
 import { NgModule } from '@angular/core';
+import { AuthGuardService } from './common/AuthGuardService';
 
 
 export const routes: Routes = [
   {path: 'training/topics/new', component: training.CreateTopicsComponent},
   {path: 'training/new', component: training.CreateTrainingComponent,
-  canDeactivate: ['canDeactivateCreateTraining']},
+  canDeactivate: ['canDeactivateCreateTraining'], canActivate: [AuthGuardService]},
   {path: 'training', component: training.TrainingListComponent,
    resolve: {trainings: training.TrainingListResolver}},
   {path: 'training/Details', component: training.TrainingDetailsComponent,

@@ -1,5 +1,7 @@
-import { ICourse } from '../shared/index';
-import { Component, Input, OnChanges } from '@angular/core';
+import { ICourse, TrainingService } from '../shared/index';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -12,18 +14,46 @@ export class TopicListComponent implements OnChanges {
   @Input() filterBy: string;
   @Input() sortBy: string;
   visibilTopics: ICourse[] = [];
-  ngOnChanges() {
-    if (this.topics) {
-      this.filterTopic(this.filterBy);
-      this.sortBy === 'name' ? this.visibilTopics.sort(sortByName)
-      : this.visibilTopics.sort(sortByVotesDesc);
-    }
+  training: any;
+  constructor(private trainingService: TrainingService , private actroute: ActivatedRoute,
+              private route: Router) {
+
   }
+  // // tslint:disable-next-line:use-lifecycle-interface
+  // ngOnInit()
+  // {
+  //     this.training = JSON.parse(this.actroute.queryParams?.value?.record) as any;
+  //     this.visibilTopics = this.trainingService.getTopics(this.training.id)
+  //     .pipe(first())
+  //     .subscribe(
+  //         (res) => {
+  //     this.filterTopic(this.filterBy);
+  //     this.sortBy === 'name' ? this.visibilTopics.sort(sortByName)
+  //     : this.visibilTopics.sort(sortByVotesDesc);
+  //         },
+  //         error => {
+  //           // this.toster.error(error?.error?.message);
+  //         });
+  // }
+  ngOnChanges() {
 
-
+      this.training = JSON.parse(this.actroute.queryParams?.value?.record) as any;
+      this.trainingService.getTopics(this.training.id)
+      .pipe(first())
+      .subscribe(
+          (res) => {
+            this.visibilTopics = res;
+            this.filterTopic(this.filterBy);
+            this.sortBy === 'name' ? this.visibilTopics.sort(sortByName)
+      : this.visibilTopics.sort(sortByVotesDesc);
+          },
+          error => {
+            // this.toster.error(error?.error?.message);
+          });
+  }
   filterTopic(filterBy: string) {
     if (filterBy  === 'all') {
-       this.visibilTopics = this.topics.slice(0);
+       this.visibilTopics = this.visibilTopics;
     } else {
        this.visibilTopics = this.topics.filter(topics => {
           return topics.level.toLocaleLowerCase() === filterBy;

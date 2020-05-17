@@ -17,7 +17,7 @@ export class AuthService {
   }
   registerUser(username: any,  password: any, emailid: any) {
 
-    const registerUser  = { Username: username, Password: password , EmailId: emailid};
+    const registerUser  = { Username: username, PasswordHash: password , EmailId: emailid};
     return  this.http.post<IUser>(this.baseUrl + 'api/users/register',
     JSON.stringify(registerUser))
     .pipe(map(res => {
@@ -32,16 +32,17 @@ export class AuthService {
   loginUser(uname: string, lname: string, pwsd: string) {
 
     const UserCredential  = { Username: uname, Password: pwsd};
-    return  this.http.post<IUser>(this.baseUrl + 'api/users/authenticate',
+    return  this.http.post<any>(this.baseUrl + 'api/users/authenticate',
     JSON.stringify(UserCredential))
 
     .pipe(map(res => {
 
       return this.currentUser =  {
-        username : res.username,
+        username : res?.user?.username,
         passwrod : '',
-        lastName : res.lastName,
-        token: res.token,
+        lastName : res?.user?.lastName,
+        token: res?.token,
+        refreshToken: res?.refreshToken
      };
   }));
 }
@@ -57,7 +58,7 @@ export class AuthService {
         lastName : '',
         token: res.token,
      };
-      return true;
+      return !this.isTokenExpired(res?.token);
     }
 
     return false;
@@ -71,13 +72,13 @@ export class AuthService {
 
     const date = new Date(0);
     date.setSeconds(decoded.exp);
-    console.log(date);
+    // console.log(date);
     var exp1 = decoded.exp * 1000;
-    console.log("Expire Date"+new Date(exp1));
+    // console.log("Expire Date"+new Date(exp1));
     var exp = decoded.nbf * 1000;
-    console.log("Nbf Date"+new Date(exp));
+    // console.log("Nbf Date"+new Date(exp));
 
-    console.log("Current Date"+new Date());
+    // console.log("Current Date"+new Date());
 
     // let dates = new Date().getTime();
     return date;

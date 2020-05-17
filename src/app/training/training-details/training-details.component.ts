@@ -19,6 +19,7 @@ export class TrainingDetailsComponent implements OnInit {
   ngOnInit() {
    this.route.queryParams.subscribe(params => {
       this.training = JSON.parse(params.record) as any;  });
+      // console.log(this.training.id)
   }
   addTopics() {
     this.addMode = true;

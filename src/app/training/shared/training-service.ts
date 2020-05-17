@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class  TrainingService {
 
+
   baseUrl: string = environment.apiUrl;
 constructor(private http: HttpClient) {
 }
@@ -72,6 +73,13 @@ saveTopics(formData: any, trainingId: number) {
   }
   getTrainings(): any {
     return  this.http.get<any>(this.baseUrl + 'api/Training')
+    .pipe(map(res => {
+        // this.currentUserSubject.next(res);
+        return res;
+  }));
+  }
+  getTopics(id: any): any {
+    return  this.http.get<any>(this.baseUrl + 'api/Topic/'+ id)
     .pipe(map(res => {
         // this.currentUserSubject.next(res);
         return res;

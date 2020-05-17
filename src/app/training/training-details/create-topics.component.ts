@@ -19,6 +19,7 @@ export class CreateTopicsComponent implements OnInit {
   Description: FormControl;
   @Output() saveTopics = new EventEmitter();
   @Output() cancelTopics = new EventEmitter();
+  training: any;
   constructor(private trainingService: TrainingService , private route: ActivatedRoute) {
   }
   ngOnInit() {
@@ -30,11 +31,17 @@ export class CreateTopicsComponent implements OnInit {
       level: this.level,
       Description: this.Description
     });
+
+
   }
 
   onSubmit(formData) {
+    // console.log(this.training.id);
+    // console.log(this.training.id);
+    // console.log(this.training.id);
 
-    this.trainingService.saveTopics(formData, +this.route.snapshot.params.id) .pipe(first())
+    this.training = JSON.parse(this.route.queryParams?.value?.record) as any;
+    this.trainingService.saveTopics(formData, this.training.id) .pipe(first())
     .subscribe(
         () => {
           this.saveTopics.emit(formData);
